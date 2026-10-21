@@ -1,0 +1,15 @@
+# Replika pola RENTAN (G3/G5/G6): pull_request → self-hosted, TANPA gate fork.
+name: CI
+on:
+  pull_request:            # fork included
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: [self-hosted] # runner milikmu (GCE VM dgn SA uji)
+    steps:
+      - uses: actions/checkout@v4   # default ref = merge ref PR = kode fork
+      - name: Run build (executes fork-controlled script)
+        run: ./ci/run-build.sh
